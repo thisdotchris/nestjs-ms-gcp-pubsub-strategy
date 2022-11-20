@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/nestjs-ms-gcp-strategy/src",
+  "monorepo": true,
+  "root": "apps/nestjs-ms-gcp-strategy",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/nestjs-ms-gcp-strategy/tsconfig.app.json"
+  },
+  "projects": {
+    "nestjs-ms-gcp-strategy": {
+      "type": "application",
+      "root": "apps/nestjs-ms-gcp-strategy",
+      "entryFile": "main",
+      "sourceRoot": "apps/nestjs-ms-gcp-strategy/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/nestjs-ms-gcp-strategy/tsconfig.app.json"
+      }
+    },
+    "another-service": {
+      "type": "application",
+      "root": "apps/another-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/another-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/another-service/tsconfig.app.json"
+      }
+    },
+    "gcp-pubsub-strategy": {
+      "type": "library",
+      "root": "libs/gcp-pubsub-strategy",
+      "entryFile": "index",
+      "sourceRoot": "libs/gcp-pubsub-strategy/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/gcp-pubsub-strategy/tsconfig.lib.json"
+      }
+    }
+  }
+}
