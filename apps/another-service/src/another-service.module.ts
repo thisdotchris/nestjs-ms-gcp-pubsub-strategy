@@ -12,7 +12,8 @@ import { AnotherServiceService } from './another-service.service';
         {
           name: 'MY_CLIENT',
           projectId: process.env.PROJECT_ID,
-          topic: process.env.TOPIC
+          topic: process.env.TOPIC,
+          responseTopic: process.env.RESPONSE_TOPIC
         }
       ]
     )

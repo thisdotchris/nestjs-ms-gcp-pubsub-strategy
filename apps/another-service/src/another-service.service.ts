@@ -9,7 +9,10 @@ export class AnotherServiceService {
 
   getHello(): string {
 
-    this.client.emit('event-send-push', { message: 'message from another service' });
+    this.client.emit('event-send-push', { message: 'via emit' });
+
+    this.client.send('event-send-push-res', { message: 'via send' })
+      .subscribe(res => console.log('res: ', res));
 
     return 'Hello World!';
   }

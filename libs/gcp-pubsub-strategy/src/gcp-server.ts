@@ -25,11 +25,23 @@ export class GCPPubSubServer extends Server implements CustomTransportStrategy {
             subscription = createdSubscription;
         }
 
-        subscription.on('message', (message: Message) => {
+        subscription.on('message', async (message: Message) => {
             const cmd = message.attributes?.cmd;
             const handler = this.messageHandlers.get(cmd) || this.messageHandlers.get(JSON.stringify({ cmd }));
 
-            if (typeof handler === 'function') handler(message);
+            if (typeof handler !== 'function') return;
+
+            const res = await handler(message);
+
+            if (handler.isEventHandler || !message.attributes?.id || !message.attributes.responseTopic) return;
+            
+            /**
+             * Publish response to response topic where the sender subscribed
+             */            
+            const data = Buffer.from(JSON.stringify(res || ''));
+            const responseTopic = await this.pubsub.topic(message.attributes.responseTopic);
+
+            await responseTopic.publish(data, { id: message.attributes?.id });
         });
     }
 

@@ -7,7 +7,7 @@ const logger = new Logger();
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get()
   getHello(): string {
@@ -15,8 +15,18 @@ export class AppController {
   }
 
   @EventPattern('event-send-push')
-  async sendPushEvent(@Payload() payload: Message){
+  async sendPushEvent(@Payload() payload: Message) {
     logger.log(`@EventPattern('event-send-push'): ${payload.data}`);
     payload.ack();
+  }
+
+  @MessagePattern('event-send-push-res')
+  async sendPushEventRes(@Payload() payload: Message) {
+    logger.log(`@MessagePattern('event-send-push-res'): ${payload.data.toString()}`);
+    payload.ack();
+    return {
+      status: 200,
+      body: 'sample response'
+    };
   }
 }
