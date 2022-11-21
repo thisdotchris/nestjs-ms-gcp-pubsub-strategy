@@ -22,9 +22,10 @@ export class AppController {
 
   @MessagePattern('event-send-push-res')
   async sendPushEventRes(@Payload() payload: Message) {
-    logger.log(`@MessagePattern('event-send-push-res'): ${payload.data.toString()}`);
+    logger.log(`@MessagePattern('event-send-push-res'): ${payload.data}`);
     payload.ack();
     return {
+      error: null,
       status: 200,
       body: 'sample response'
     };
