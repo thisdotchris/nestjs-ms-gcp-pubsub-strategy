@@ -52,6 +52,8 @@ export class GCPPubSubClient extends ClientProxy {
         const id = uuid();
         const responseTopic = this.options?.responseTopic;
 
+        if (!responseTopic) throw new Error('Must provide response topic name');
+
         this.topic.publish(data, { cmd, id, responseTopic });
         this.queueCallback.set(id, callback);
 
